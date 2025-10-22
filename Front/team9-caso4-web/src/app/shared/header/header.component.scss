@@ -23,7 +23,9 @@
 
 .language-button, .profile-button, .notification-button {
   color: var(--button-color);
-  margin: 0 5px;
+  margin: 0 2px;
+  border: 1px solid #ff75f8;
+  min-width: 10px !important;
 }
 
 .profile-button {

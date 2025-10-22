@@ -1,19 +1,21 @@
 <div class="navbar">
   <div class="logo">
-    <img src="https://placehold.co/50x50/png" alt="Logo">
+    <img src="/assets/images/logo.png" alt="Logo">
   </div>
   <div class="right-menu">
     <button mat-button class="language-button">EN</button>
     <button mat-button [matMenuTriggerFor]="menu" class="profile-button">
-      <img src="https://placehold.co/40x40/jpg" alt="Profile" class="profile-image">
+   <!--   <img src="https://placehold.co/40x40/jpg" alt="Profile" class="profile-image">-->
       <span>Jane Doe</span>
       <mat-icon>expand_more</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
       <!-- Add menu items here if needed -->
     </mat-menu>
-    <button mat-icon-button class="notification-button">
-      <mat-icon>notifications</mat-icon>
-    </button>
+      <button mat-button class="notification-button">
+           <mat-icon>notifications</mat-icon>
+      </button>
   </div>
 </div>
+
+

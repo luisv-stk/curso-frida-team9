@@ -1,43 +1,44 @@
-/*:root {
+/* ==========================================================================
+   CSS VARIABLES
+   ========================================================================== */
+:root {
   --primary-color: #ff75f8;
   --accent-color: #a2169a;
-  --text-color-light: #ffffff;
+  --background-gradient: linear-gradient(135deg, #000000, #2c003e, #20002c);
+  --text-color: #ffffff;
   --text-color-placeholder: rgba(255, 255, 255, 0.7);
-  --text-color-label: rgba(255, 255, 255, 0.8);
-  --border-color-default: rgba(255, 255, 255, 0.3);
-  --border-color-hover: rgba(255, 255, 255, 0.6);
-  --error-color: #f44336;
-  --gradient-background: linear-gradient(135deg, #1c0031 0%, #2d1b69 35%, #4a148c 70%, #6a1b9a 100%);
   --border-radius: 8px;
-  --border-radius-small: 4px;
-}*/
+}
 
 /* ==========================================================================
    GLOBAL STYLES
    ========================================================================== */
-
-/*body, html {
+body {
   margin: 0;
   padding: 0;
-  font-family: Arial, sans-serif;
-}*/
+  font-family: 'Roboto', sans-serif;
+}
 
 /* ==========================================================================
-   LAYOUT STYLES
+   LAYOUT COMPONENTS
    ========================================================================== */
-
 .container-fluid {
   display: flex;
   height: 100vh;
-  background: var(--gradient-background);
+  background: var(--background-gradient);
+  color: var(--text-color);
 }
 
 .login-area {
   flex: 1;
   max-width: 50%;
-  padding-left: 5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 3rem 2rem 2rem 4rem;
 }
-/*
+
 .gallery-area {
   flex: 1;
   max-width: 50%;
@@ -58,242 +59,12 @@
 }
 
 /* ==========================================================================
-   TYPOGRAPHY
+   LOGO AND BRANDING
    ========================================================================== */
-
-/*h1 {
-  font-size: 2rem;
-  font-weight: bold;
-  color: var(--text-color-light);
-}
-
-h3 {
-  color: var(--text-color-light);
-}
-
-a {
-  color: var(--text-color-light);
-  text-decoration: none;
-}
-
-a:hover {
-  color: var(--primary-color);
-}
-
-/* ==========================================================================
-   FORM STYLES
-   ========================================================================== */
-/*
-form {
-  width: 100%;
-  max-width: 380px;
-  padding: 0;
-  margin: 0;
-}
-
-/* ==========================================================================
-   ANGULAR MATERIAL FORM FIELD STYLES
-   ========================================================================== */
-
-/* Base form field styling */
-/*mat-form-field {
-  width: 100%;
-  margin-bottom: 1rem;
-  border-radius: var(--border-radius);
-  overflow: hidden;
-  background: var(--gradient-background);
-}
-
-/* Form field wrapper and text field wrapper */
-/*mat-form-field .mat-mdc-form-field-wrapper,
-.mat-mdc-text-field-wrapper {
-  background: var(--gradient-background);
-  border-radius: var(--border-radius);
-  overflow: hidden;
-  padding: 4px;
-}
-
-/* Outline styling */
-/*
-mat-form-field .mdc-notched-outline,
-mat-form-field .mdc-notched-outline__leading,
-mat-form-field .mdc-notched-outline__notch,
-mat-form-field .mdc-notched-outline__trailing {
-  background: var(--gradient-background);
-  border-color: var(--border-color-default);
-  border-width: 1px;
-}
-
-/* Form field components with gradient background */
-/*mat-form-field .mat-mdc-form-field-outline,
-mat-form-field .mat-mdc-form-field-infix {
-  background: var(--gradient-background);
-}
-
-mat-form-field .mat-mdc-form-field-infix {
-  padding: 8px 12px;
-  border-radius: var(--border-radius-small);
-}
-
-/* Labels and floating labels */
-/*mat-form-field .mat-mdc-form-field-label,
-mat-form-field .mat-mdc-floating-label {
-  color: var(--text-color-label);
-}
-
-/* Input elements */
-/*mat-form-field input,
-mat-form-field .mat-mdc-input-element,
-mat-form-field input[matInput] {
-  color: var(--text-color-light);
-  background: var(--gradient-background);
-  border: none;
-  padding: 12px;
-  border-radius: var(--border-radius-small);
-}
-
-mat-form-field .mat-mdc-input-element::placeholder,
-mat-form-field input[matInput]::placeholder {
-  color: var(--text-color-placeholder);
-  font-style: italic;
-}
-
-/* Transparent subscript and bottom align elements */
-/*mat-form-field .mat-mdc-form-field-subscript-wrapper,
-mat-form-field .mat-mdc-form-field-bottom-align {
-  background-color: transparent;
-}
-
-/* ==========================================================================
-   FORM FIELD STATES
-   ========================================================================== */
-
-/* Focused state */
-/*mat-form-field.mat-focused .mdc-notched-outline__leading,
-mat-form-field.mat-focused .mdc-notched-outline__notch,
-mat-form-field.mat-focused .mdc-notched-outline__trailing {
-  border-color: var(--primary-color);
-  border-width: 2px;
-  background: var(--gradient-background);
-}
-
-mat-form-field.mat-focused .mat-mdc-form-field-label,
-mat-form-field.mat-focused .mat-mdc-floating-label {
-  color: var(--primary-color);
-}
-
-mat-form-field input[matInput]:focus {
-  outline: none;
-  box-shadow: 0 0 8px rgba(255, 117, 248, 0.3);
-}
-
-/* Hover state */
-/*mat-form-field:hover .mdc-notched-outline__leading,
-mat-form-field:hover .mdc-notched-outline__notch,
-mat-form-field:hover .mdc-notched-outline__trailing {
-  border-color: var(--border-color-hover);
-  background: var(--gradient-background);
-}
-
-/* Error state */
-/*mat-form-field.mat-form-field-invalid .mdc-notched-outline__leading,
-mat-form-field.mat-form-field-invalid .mdc-notched-outline__notch,
-mat-form-field.mat-form-field-invalid .mdc-notched-outline__trailing {
-  border-color: var(--error-color);
-  background: var(--gradient-background);
-}
-
-/* ==========================================================================
-   FORM FIELD EFFECTS
-   ========================================================================== */
-
-/*mat-form-field .mat-mdc-form-field-underline,
-mat-form-field .mdc-line-ripple {
-  background: var(--primary-color);
-}
-
-/* ==========================================================================
-   ICON AND BUTTON STYLES
-   ========================================================================== */
-/*
-mat-icon {
-  color: var(--text-color-light);
-  background: var(--gradient-background);
-  padding: 8px;
-  border-radius: var(--border-radius-small);
-  margin-right: 8px;
-}
-
-button[mat-raised-button] {
-  background-color: var(--primary-color);
-  color: white;
-  width: 100%;
-  margin-top: 1rem;
-  padding: 0.75rem;
-  font-weight: bold;
-}
-
-button[mat-raised-button]:hover {
-  background-color: var(--accent-color);
-}
-
-/* ==========================================================================
-   RESPONSIVE DESIGN
-   ========================================================================== */
-/*
-@media (max-width: 768px) {
-  .container-fluid {
-    flex-direction: column;
-  }
-
-  .login-area,
-  .gallery-area {
-    max-width: 100%;
-    padding: 2rem;
-  }
-
-  .gallery-area img {
-    width: calc(50% - 0.5rem);
-  }
-}
-
-
-*/
-
-
-:root {
-  --primary-color: #ff75f8;
-  --background-gradient: linear-gradient(135deg, #000000, #2c003e, #20002c);
-  --text-color: #ffffff;
-}
-
-body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Roboto', sans-serif;
-}
-
-.container {
-  display: flex;
-  height: 100vh;
-  background: var(--background-gradient);
-  color: var(--text-color);
-}
-
-.sidebar {
-  flex: 2;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
 .logo {
   display: flex;
   align-items: center;
-  margin-bottom: 50px;
+  margin-bottom: 3rem;
 }
 
 .logo-icon {
@@ -311,91 +82,127 @@ body {
 .tagline {
   font-size: 2rem;
   font-weight: bold;
-  margin-bottom: 30px;
+  margin-bottom: 2rem;
   color: var(--text-color);
 }
 
+/* ==========================================================================
+   FORM STYLES
+   ========================================================================== */
 form {
-  width: 60%;
-  max-width: 320px;
-  margin: 0 auto;
+  width: 100%;
+  max-width: 350px;
 }
 
 mat-form-field {
   width: 100%;
-  margin-bottom: 20px;
-  border: px solid #ffffff;
-  color: var(--text-color);
+  margin-bottom: 1.25rem;
 }
 
-/* Form field text color overrides */
-mat-form-field input {
-  color: #ffffff !important;
-}
-
+/* Angular Material form field text styling */
+mat-form-field input,
 mat-form-field .mat-mdc-input-element {
-  color: #ffffff !important;
+  color: var(--text-color) !important;
 }
 
 mat-form-field .mdc-floating-label,
-mat-form-field .mat-mdc-floating-label {
-  color: #ffffff !important;
-}
-
+mat-form-field .mat-mdc-floating-label,
 mat-form-field .mat-mdc-form-field-label {
-  color: #ffffff !important;
+  color: var(--text-color) !important;
 }
 
 mat-form-field input::placeholder {
-  color: rgba(255, 255, 255, 0.7) !important;
+  color: var(--text-color-placeholder) !important;
 }
 
+/* Material icons styling */
+mat-icon {
+  color: var(--text-color) !important;
+}
+
+/* ==========================================================================
+   BUTTON STYLES
+   ========================================================================== */
 .login-button {
   width: 100%;
+  background-color: var(--primary-color) !important;
+  color: var(--text-color) !important;
+  font-weight: bold;
+  margin-top: 1rem;
 }
 
+.login-button:hover {
+  background-color: var(--accent-color) !important;
+}
+
+/* ==========================================================================
+   LINK STYLES
+   ========================================================================== */
 .forgot-password {
   display: block;
-  margin-top: 10px;
+  margin-top: 1rem;
   color: var(--text-color);
   text-decoration: none;
+  text-align: center;
 }
 
 .forgot-password:hover {
+  color: var(--primary-color);
   text-decoration: underline;
 }
 
-.gallery {
-  flex: 3;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-around;
-  padding: 10px;
+/* ==========================================================================
+   RESPONSIVE DESIGN
+   ========================================================================== */
+@media (max-width: 768px) {
+  .container-fluid {
+    flex-direction: column;
+  }
+
+  .login-area {
+    max-width: 100%;
+    padding: 2rem;
+    align-items: center;
+    text-align: center;
+  }
+
+  .gallery-area {
+    max-width: 100%;
+    padding: 1rem;
+  }
+
+  form {
+    max-width: 300px;
+  }
+
+  .tagline {
+    font-size: 1.5rem;
+  }
+
+  .logo-text {
+    font-size: 1.25rem;
+  }
 }
 
-.gallery-image {
-  width: 70%;
-  margin: 5px 0;
-  border: 2px solid #ffffff;
-}
+@media (max-width: 480px) {
+  .login-area {
+    padding: 1rem;
+  }
 
+  form {
+    max-width: 280px;
+  }
 
-.gallery-area {
-  flex: 1;
-  max-width: 70%;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  padding: 2rem;
-  align-items: center;
-  justify-content: center;
-}
+  .tagline {
+    font-size: 1.25rem;
+  }
 
-.gallery-area img {
-  width: calc(50% - 0.5rem);
-  height: auto;
-  max-height: 200px;
-  object-fit: cover;
-  border-radius: var(--border-radius);
+  .logo-text {
+    font-size: 1rem;
+  }
+
+  .gallery-area img {
+    width: 100%;
+    max-height: 150px;
+  }
 }
