@@ -1,0 +1,52 @@
+
+<!--<div class="container-fluid min-vh-100 d-flex p-0">
+  <div class="d-flex flex-column justify-content-center align-items-start p-5 text-light login-area">
+    <div class="mb-5">
+      <h3 class="mb-0">PEGGYBANK</h3>
+    </div>
+    <h1 class="mb-4">YOUR OWN GALLERY<br>CURATOR</h1>
+    <form class="w-100" [formGroup]="loginForm" (ngSubmit)="onLogin()">
+      <mat-form-field>
+          <mat-icon matPrefix>person</mat-icon>
+          <input matInput placeholder="USERNAME" formControlName="username" required>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-icon matPrefix>lock</mat-icon>
+          <input matInput type="password" placeholder="PASSWORD" formControlName="password" required>
+        </mat-form-field>
+     <button mat-raised-button color="primary" type="submit">LOGIN</button>
+    </form>
+    <a href="#" class="text-white mt-2">Forgot password?</a>
+  </div> -->
+
+<div class="container-fluid min-vh-100 d-flex p-0">
+
+  <div class="mb-5 d-flex flex-column justify-content-center align-items-start text-light login-area">
+    <div class="logo">
+      <img src="https://placehold.co/50x50" alt="logo" class="logo-icon">
+      <span class="logo-text">PEGGYBANK</span>
+    </div>
+    <div class="tagline">
+      YOUR OWN GALLERY CURATOR
+    </div>
+
+   <form class="w-100" [formGroup]="loginForm" (ngSubmit)="onLogin()">
+      <mat-form-field appearance="outline">
+        <mat-icon matPrefix>person</mat-icon>
+        <input matInput placeholder="USERNAME"  formControlName="username" required>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-icon matPrefix>lock</mat-icon>
+        <input matInput placeholder="PASSWORD" type="password"  formControlName="password" required>
+      </mat-form-field>
+      <button mat-raised-button color="primary" class="login-button">LOGIN</button>
+      <a href="#" class="forgot-password">Forgot password?</a>
+    </form>
+  </div>
+  <div class="gallery-area d-flex flex-wrap">
+    <img src="/assets/images/image1.png" alt="Gallery Image 1" class="img-fluid m-2">
+    <img src="/assets/images/image2.png" alt="Gallery Image 2" class="img-fluid m-2">
+    <img src="/assets/images/image3.png" alt="Gallery Image 3" class="img-fluid m-2">
+    <img src="/assets/images/image4.png" alt="Gallery Image 4" class="img-fluid m-2">
+  </div>
+</div>

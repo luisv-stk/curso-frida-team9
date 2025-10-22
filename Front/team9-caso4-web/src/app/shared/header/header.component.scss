@@ -1,0 +1,39 @@
+:root {
+  --background-color: #190421;
+  --button-color: #ff75f8;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: var(--background-color);
+}
+
+.logo img {
+  width: 50px;
+  height: 50px;
+}
+
+.right-menu {
+  display: flex;
+  align-items: center;
+}
+
+.language-button, .profile-button, .notification-button {
+  color: var(--button-color);
+  margin: 0 5px;
+}
+
+.profile-button {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.profile-image {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+}
