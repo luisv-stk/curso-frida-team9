@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LocalStorage Persistence Test</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f5f5f5;
+      }
+      .container {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      .test-section {
+        margin: 20px 0;
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+      }
+      .test-section h3 {
+        margin-top: 0;
+        color: #333;
+      }
+      button {
+        background: #007bff;
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 4px;
+        cursor: pointer;
+        margin: 5px;
+      }
+      button:hover {
+        background: #0056b3;
+      }
+      .danger {
+        background: #dc3545;
+      }
+      .danger:hover {
+        background: #c82333;
+      }
+      .results {
+        background: #f8f9fa;
+        padding: 10px;
+        border-radius: 4px;
+        margin-top: 10px;
+        white-space: pre-wrap;
+        font-family: monospace;
+      }
+      .success {
+        color: #28a745;
+      }
+      .error {
+        color: #dc3545;
+      }
+      .info {
+        color: #17a2b8;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Home Component LocalStorage Persistence Test</h1>
+      <p>
+        This test verifies that the localStorage persistence functionality works correctly for the
+        Home Component image management.
+      </p>
+
+      <div class="test-section">
+        <h3>1. Check Current Storage</h3>
+        <p>View what's currently stored in localStorage for the home component images.</p>
+        <button onclick="checkStorage()">Check Storage</button>
+        <div id="storageResults" class="results"></div>
+      </div>
+
+      <div class="test-section">
+        <h3>2. Simulate Image Upload</h3>
+        <p>
+          Simulate adding images to localStorage as if they were uploaded through the component.
+        </p>
+        <button onclick="simulateUpload()">Add Test Images</button>
+        <div id="uploadResults" class="results"></div>
+      </div>
+
+      <div class="test-section">
+        <h3>3. Test Storage Persistence</h3>
+        <p>
+          Test that data persists across page reloads (manual test - reload page after adding
+          images).
+        </p>
+        <button onclick="location.reload()">Reload Page</button>
+        <div class="results info">
+          After adding test images, click "Reload Page" and then "Check Storage" to verify
+          persistence.
+        </div>
+      </div>
+
+      <div class="test-section">
+        <h3>4. Simulate Image Removal</h3>
+        <p>Test removing images from storage.</p>
+        <button onclick="simulateRemoval()">Remove First Image</button>
+        <button onclick="simulateClearAll()" class="danger">Clear All Images</button>
+        <div id="removalResults" class="results"></div>
+      </div>
+
+      <div class="test-section">
+        <h3>5. Storage Size Test</h3>
+        <p>Check storage size and validate JSON format.</p>
+        <button onclick="validateStorage()">Validate Storage</button>
+        <div id="validationResults" class="results"></div>
+      </div>
+    </div>
+
+    <script>
+      const STORAGE_KEY = 'home_component_images';
+
+      function checkStorage() {
+        const results = document.getElementById('storageResults');
+        try {
+          const storedData = localStorage.getItem(STORAGE_KEY);
+          if (storedData) {
+            const parsedData = JSON.parse(storedData);
+            results.textContent = `Found ${parsedData.length} stored images:\n${JSON.stringify(
+              parsedData,
+              null,
+              2
+            )}`;
+            results.className = 'results success';
+          } else {
+            results.textContent = 'No images found in localStorage';
+            results.className = 'results info';
+          }
+        } catch (error) {
+          results.textContent = `Error reading storage: ${error.message}`;
+          results.className = 'results error';
+        }
+      }
+
+      function simulateUpload() {
+        const results = document.getElementById('uploadResults');
+        try {
+          // Create mock image data (small base64 test images)
+          const testImages = [
+            {
+              url: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg==',
+              name: 'test-image-1.png',
+              size: 68,
+              type: 'image/png',
+            },
+            {
+              url: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChAFd+W1ZXgAAAABJRU5ErkJggg==',
+              name: 'test-image-2.png',
+              size: 68,
+              type: 'image/png',
+            },
+          ];
+
+          // Get existing images or start with empty array
+          const existingData = localStorage.getItem(STORAGE_KEY);
+          let currentImages = existingData ? JSON.parse(existingData) : [];
+
+          // Add new test images
+          currentImages = [...currentImages, ...testImages];
+
+          // Limit to 6 images (same as component logic)
+          if (currentImages.length > 6) {
+            currentImages = currentImages.slice(-6);
+          }
+
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(currentImages));
+          results.textContent = `Successfully added ${testImages.length} test images. Total stored: ${currentImages.length}`;
+          results.className = 'results success';
+        } catch (error) {
+          results.textContent = `Error simulating upload: ${error.message}`;
+          results.className = 'results error';
+        }
+      }
+
+      function simulateRemoval() {
+        const results = document.getElementById('removalResults');
+        try {
+          const storedData = localStorage.getItem(STORAGE_KEY);
+          if (!storedData) {
+            results.textContent = 'No images to remove';
+            results.className = 'results info';
+            return;
+          }
+
+          let images = JSON.parse(storedData);
+          if (images.length === 0) {
+            results.textContent = 'No images to remove';
+            results.className = 'results info';
+            return;
+          }
+
+          const removedImage = images.shift(); // Remove first image
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(images));
+          results.textContent = `Removed image: ${removedImage.name}. Remaining: ${images.length}`;
+          results.className = 'results success';
+        } catch (error) {
+          results.textContent = `Error removing image: ${error.message}`;
+          results.className = 'results error';
+        }
+      }
+
+      function simulateClearAll() {
+        const results = document.getElementById('removalResults');
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify([]));
+          results.textContent = 'All images cleared from storage';
+          results.className = 'results success';
+        } catch (error) {
+          results.textContent = `Error clearing storage: ${error.message}`;
+          results.className = 'results error';
+        }
+      }
+
+      function validateStorage() {
+        const results = document.getElementById('validationResults');
+        try {
+          const storedData = localStorage.getItem(STORAGE_KEY);
+          if (!storedData) {
+            results.textContent = 'No data to validate';
+            results.className = 'results info';
+            return;
+          }
+
+          const parsedData = JSON.parse(storedData);
+          const dataSize = new Blob([storedData]).size;
+
+          let validation = `Storage validation results:\n`;
+          validation += `- Valid JSON: ✓\n`;
+          validation += `- Data size: ${dataSize} bytes\n`;
+          validation += `- Number of images: ${parsedData.length}\n`;
+          validation += `- Required fields check:\n`;
+
+          let allValid = true;
+          parsedData.forEach((img, index) => {
+            const hasUrl = img.hasOwnProperty('url');
+            const hasName = img.hasOwnProperty('name');
+            const hasSize = img.hasOwnProperty('size');
+            const hasType = img.hasOwnProperty('type');
+            const isValidDataUrl = img.url && img.url.startsWith('data:');
+
+            validation += `  Image ${index + 1}: `;
+            if (hasUrl && hasName && hasSize && hasType && isValidDataUrl) {
+              validation += `✓ Valid\n`;
+            } else {
+              validation += `✗ Missing fields\n`;
+              allValid = false;
+            }
+          });
+
+          validation += `\nOverall: ${allValid ? '✓ All images valid' : '✗ Some images invalid'}`;
+          results.textContent = validation;
+          results.className = allValid ? 'results success' : 'results error';
+        } catch (error) {
+          results.textContent = `Validation error: ${error.message}`;
+          results.className = 'results error';
+        }
+      }
+
+      // Auto-check storage when page loads
+      document.addEventListener('DOMContentLoaded', checkStorage);
+    </script>
+  </body>
+</html>

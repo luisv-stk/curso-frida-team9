@@ -1,0 +1,64 @@
+<mat-toolbar color="primary">
+  <mat-icon>face</mat-icon>
+  <div fxFlex></div>
+  <button mat-button>EN</button>
+  <button mat-button>
+    Jane Doe
+    <mat-icon>arrow_drop_down</mat-icon>
+  </button>
+  <button mat-icon-button>
+    <mat-icon>settings</mat-icon>
+  </button>
+</mat-toolbar>
+
+<div class="container">
+  <aside class="sidebar">
+    <h3>Keywords</h3>
+    <mat-form-field appearance="fill">
+      <mat-select>
+        <mat-option value="spring">Spring</mat-option>
+        <mat-option value="smart">Smart</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-select>
+        <mat-option value="modern">Modern</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div class="sidebar-section">
+      Label<br />
+      Description
+    </div>
+    <div class="sidebar-section">
+      Color<br />
+      Label
+    </div>
+    <div class="sidebar-section">
+      Size<br />
+      Label
+    </div>
+  </aside>
+
+  <main class="content">
+    <mat-form-field appearance="outline">
+      <mat-label>Buscar</mat-label>
+      <input matInput type="text" />
+      <button mat-icon-button matSuffix>
+        <mat-icon>search</mat-icon>
+      </button>
+    </mat-form-field>
+    <button mat-raised-button color="primary">New</button>
+    <p>
+      Se han encontrado 15 imágenes en la última subida. Las he clasificado en las siguientes
+      categorías...
+    </p>
+    <ng-container *ngFor="let category of categories">
+      <h2>Tag sugerido: {{ category.title }}</h2>
+      <div class="image-grid">
+        <div *ngFor="let image of category.images">
+          <img [src]="image" alt="{{ category.title }}" />
+        </div>
+      </div>
+    </ng-container>
+  </main>
+</div>

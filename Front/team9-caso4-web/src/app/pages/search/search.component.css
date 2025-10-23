@@ -1,0 +1,54 @@
+:root {
+  --primary-color: #190421;
+  --secondary-color: #ff11f2;
+  --background-color: #1e1e1e;
+  --text-color: #ffffff;
+  --accent-color: #ff75f8;
+  --button-background: #00003c;
+}
+
+.mat-toolbar {
+  background-color: var(--primary-color);
+  color: var(--text-color);
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+}
+
+.sidebar {
+  width: 20%;
+  background-color: var(--primary-color);
+  padding: 20px;
+  color: var(--text-color);
+}
+
+.sidebar-section {
+  margin: 10px 0;
+}
+
+.content {
+  width: 80%;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  padding: 20px;
+}
+
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+h2 {
+  color: var(--accent-color);
+  margin-top: 20px;
+} 
+
+img {
+  width: 100%;
+  border-radius: 10px;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+}

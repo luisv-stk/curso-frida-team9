@@ -12,13 +12,21 @@ export class HomeComponent {
 
 }*/
 
-import { Component, ViewEncapsulation } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, ViewEncapsulation, OnInit, Inject, PLATFORM_ID } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { HeaderComponent } from '../../shared/header/header.component';
+import { Router } from '@angular/router';
+
+interface StoredImage {
+  url: string;
+  name: string;
+  size: number;
+  type: string;
+}
 
 @Component({
   selector: 'app-root',
@@ -28,13 +36,79 @@ import { HeaderComponent } from '../../shared/header/header.component';
   styleUrls: ['./home.component.css'],
   encapsulation: ViewEncapsulation.None,
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
+  private readonly STORAGE_KEY = 'home_component_images';
+
   isDragOver = false;
   uploadedFiles: File[] = [];
   uploadMessage = '';
   isProcessing = false;
   displayedImages: { file: File; url: string; name: string }[] = [];
   selectedImageIndex: number | null = null;
+
+  constructor(private router: Router, @Inject(PLATFORM_ID) private platformId: Object) { }
+
+  ngOnInit() {
+    this.loadImagesFromStorage();
+  }
+
+  private loadImagesFromStorage() {
+    if (!isPlatformBrowser(this.platformId)) {
+      return; // Skip localStorage operations during SSR
+    }
+
+    try {
+      const storedData = localStorage.getItem(this.STORAGE_KEY);
+      if (storedData) {
+        const storedImages: StoredImage[] = JSON.parse(storedData);
+        this.displayedImages = storedImages.map(stored => ({
+          file: this.createFileFromStoredImage(stored),
+          url: stored.url,
+          name: stored.name
+        }));
+      }
+    } catch (error) {
+      console.error('Error loading images from localStorage:', error);
+      // Clear corrupted data
+      localStorage.removeItem(this.STORAGE_KEY);
+    }
+  }
+
+  private createFileFromStoredImage(stored: StoredImage): File {
+    // Create a mock File object since we can't recreate the original File
+    const blob = this.dataURLtoBlob(stored.url);
+    return new File([blob], stored.name, { type: stored.type });
+  }
+
+  private dataURLtoBlob(dataURL: string): Blob {
+    const arr = dataURL.split(',');
+    const mime = arr[0].match(/:(.*?);/)?.[1] || '';
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new Blob([u8arr], { type: mime });
+  }
+
+  private saveImagesToStorage() {
+    if (!isPlatformBrowser(this.platformId)) {
+      return; // Skip localStorage operations during SSR
+    }
+
+    try {
+      const imagesToStore: StoredImage[] = this.displayedImages.map(img => ({
+        url: img.url,
+        name: img.name,
+        size: img.file.size,
+        type: img.file.type
+      }));
+      localStorage.setItem(this.STORAGE_KEY, JSON.stringify(imagesToStore));
+    } catch (error) {
+      console.error('Error saving images to localStorage:', error);
+    }
+  }
 
   onDragOver(event: DragEvent) {
     event.preventDefault();
@@ -134,6 +208,9 @@ export class HomeComponent {
   }
 
   private processValidFiles(files: File[]) {
+    let processedCount = 0;
+    const totalFiles = files.length;
+
     files.forEach(file => {
       // Create preview URLs for images
       const reader = new FileReader();
@@ -150,6 +227,12 @@ export class HomeComponent {
           // Limit to 6 images (2x3 grid)
           if (this.displayedImages.length > 6) {
             this.displayedImages = this.displayedImages.slice(-6);
+          }
+
+          processedCount++;
+          // Save to localStorage when all files are processed
+          if (processedCount === totalFiles) {
+            this.saveImagesToStorage();
           }
         }
       };
@@ -168,6 +251,7 @@ export class HomeComponent {
       }
 
       this.displayedImages.splice(index, 1);
+      this.saveImagesToStorage(); // Update localStorage after removal
       this.uploadMessage = 'Imagen eliminada exitosamente';
 
       // Clear message after 3 seconds
@@ -202,29 +286,14 @@ export class HomeComponent {
     return null;
   }
 
-  downloadSelectedImage() {
-    const selectedImage = this.getSelectedImage();
-    if (selectedImage) {
-      const link = document.createElement('a');
-      link.href = selectedImage.url;
-      link.download = selectedImage.name;
-      link.click();
-
-      this.uploadMessage = `Descargando ${selectedImage.name}...`;
-      setTimeout(() => {
-        this.uploadMessage = '';
-      }, 3000);
-    } else {
-      this.uploadMessage = 'Selecciona una imagen primero';
-      setTimeout(() => {
-        this.uploadMessage = '';
-      }, 3000);
-    }
+  search() {
+    this.router.navigate(['/search']);
   }
 
   clearAllImages() {
     this.displayedImages = [];
     this.selectedImageIndex = null;
+    this.saveImagesToStorage(); // Update localStorage after clearing all images
     this.uploadMessage = 'Todas las imágenes han sido eliminadas';
 
     setTimeout(() => {

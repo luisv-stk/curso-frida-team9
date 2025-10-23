@@ -1,43 +1,36 @@
 <div class="container">
-<app-header> </app-header>
-
+  <app-header> </app-header>
 
   <div class="main-content">
     <div class="left-panel">
       <h1>CREA TU PROPIO BANCO DE IMÁGENES PERSONALIZADO</h1>
 
       <div class="panel-buttons">
-      <p>Nuestro gestor de imágenes con IA facilitará:</p>
-      <mat-form-field appearance="fill" class="search-field">
-        <input matInput placeholder="Buscar">
-      </mat-form-field>
-
-      <button mat-button class="action-button" (click)="downloadSelectedImage()">
-        Descargar
-      </button>
-      <button mat-button class="action-button">
-        Clasificar
-      </button>
-     <!--<button mat-button class="action-button" (click)="clearAllImages()"
+        <p>Nuestro gestor de imágenes con IA facilitará:</p>
+        <button mat-button class="action-button" (click)="search()">Buscar</button>
+        <button mat-button class="action-button">Clasificar</button>
+        <!--<button mat-button class="action-button" (click)="clearAllImages()"
               *ngIf="displayedImages.length > 0">
         Limpiar Todo
       </button>-->
       </div>
       <div class="image-preview">
         <!-- Display uploaded images if available -->
-        <ng-container *ngIf="displayedImages.length > 0;">
-          <div class="image-container"
-               *ngFor="let image of displayedImages; let i = index"
-               [class.selected]="isImageSelected(i)"
-               (click)="selectImage(i)">
-            <img [src]="image.url"
-                 [alt]="image.name"
-                 class="uploaded-image">
+        <ng-container *ngIf="displayedImages.length > 0">
+          <div
+            class="image-container"
+            *ngFor="let image of displayedImages; let i = index"
+            [class.selected]="isImageSelected(i)"
+            (click)="selectImage(i)"
+          >
+            <img [src]="image.url" [alt]="image.name" class="uploaded-image" />
             <div class="image-overlay">
-              <button class="remove-button"
-                      (click)="removeImage(i); $event.stopPropagation()"
-                      type="button"
-                      title="Eliminar imagen">
+              <button
+                class="remove-button"
+                (click)="removeImage(i); $event.stopPropagation()"
+                type="button"
+                title="Eliminar imagen"
+              >
                 <mat-icon>close</mat-icon>
               </button>
             </div>
@@ -61,30 +54,41 @@
     </div>
 
     <div class="right-panel">
-      <div class="upload-container"
-           [class.drag-over]="isDragOver"
-           (dragover)="onDragOver($event)"
-           (dragenter)="onDragEnter($event)"
-           (dragleave)="onDragLeave($event)"
-           (drop)="onDrop($event)"
-           (click)="onUploadContainerClick()">
+      <div
+        class="upload-container"
+        [class.drag-over]="isDragOver"
+        (dragover)="onDragOver($event)"
+        (dragenter)="onDragEnter($event)"
+        (dragleave)="onDragLeave($event)"
+        (drop)="onDrop($event)"
+        (click)="onUploadContainerClick()"
+      >
         <mat-icon class="upload-icon" *ngIf="!isProcessing">add</mat-icon>
         <mat-icon class="upload-icon processing" *ngIf="isProcessing">refresh</mat-icon>
 
         <p class="upload-text" *ngIf="!uploadMessage && !isProcessing">Arrastra varias imágenes</p>
-        <p class="upload-text" *ngIf="!uploadMessage && !isProcessing">(o selecciona una carpeta)</p>
+        <p class="upload-text" *ngIf="!uploadMessage && !isProcessing">
+          (o selecciona una carpeta)
+        </p>
 
-        <p class="upload-message" *ngIf="uploadMessage" [class.success]="uploadMessage.includes('exitosamente')" [class.error]="uploadMessage.includes('Error')">
+        <p
+          class="upload-message"
+          *ngIf="uploadMessage"
+          [class.success]="uploadMessage.includes('exitosamente')"
+          [class.error]="uploadMessage.includes('Error')"
+        >
           {{ uploadMessage }}
         </p>
 
         <!-- Hidden file input -->
-        <input type="file"
-               id="fileInput"
-               multiple
-               accept="image/*"
-               style="display: none;"
-               (change)="onFileSelected($event)">
+        <input
+          type="file"
+          id="fileInput"
+          multiple
+          accept="image/*"
+          style="display: none"
+          (change)="onFileSelected($event)"
+        />
       </div>
     </div>
   </div>
