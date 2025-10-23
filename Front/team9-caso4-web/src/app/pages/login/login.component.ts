@@ -5,7 +5,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { ReactiveFormsModule, FormsModule, FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
-import { HeaderComponent } from '../../shared/header/header.component';
 import { Router } from '@angular/router';
 
 @Component({
@@ -18,7 +17,6 @@ import { Router } from '@angular/router';
     ReactiveFormsModule,
     FormsModule,
     MatIconModule,
-    HeaderComponent
   ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
@@ -39,11 +37,11 @@ export class LoginComponent {
     console.log('Login button clicked');
     console.log('Form valid:', this.loginForm.valid);
     console.log('Form values:', this.loginForm.value);
-    
+
     if (this.loginForm.valid) {
       const username = this.loginForm.get('username')?.value;
       const password = this.loginForm.get('password')?.value;
-      
+
       if (username && password) {
         console.log('Navigating to home...');
         this.router.navigate(['/home']);
