@@ -90,7 +90,12 @@ public class ExternalApiService {
         post.setEntity(entity);
 
         try (CloseableHttpResponse response = (CloseableHttpResponse) httpClient.execute(post)) {
-            return EntityUtils.toString(response.getEntity());
+            //return EntityUtils.toString(response.getEntity());
+            String jsonString = EntityUtils.toString(response.getEntity());
+            ObjectMapper mapperFormat = new ObjectMapper();
+            Object json = mapperFormat.readValue(jsonString, Object.class);
+            // Devuelve el JSON formateado (pretty print)
+            return mapperFormat.writerWithDefaultPrettyPrinter().writeValueAsString(json);
         }
     }
 
