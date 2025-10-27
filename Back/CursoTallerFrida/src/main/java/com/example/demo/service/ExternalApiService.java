@@ -34,31 +34,19 @@ public class ExternalApiService {
         HttpPost post = new HttpPost("https://frida-llm-api.azurewebsites.net/v1/chat/completions");
 
         // Example payload setup matching requirements
-        String prompt = "You are an image analysis assistant. Your task is to analyze an image provided in base64 encoding and return ONLY a valid JSON object with this exact structure:\n" + //
-                        " \n" + //
-                        "            {\n" + //
-                        "            \"tags\": [string]\n" + //
-                        "            }\n" + //
-                        " \n" + //
-                        "            ### Rules:\n" + //
-                        "            1. Output ONLY the JSON object, no explanations, no comments, no markdown.\n" + //
-                        "            2. Use double quotes for all keys and values.\n" + //
-                        "            3. The \"tags\" list must contain between 1 and 10 items.\n" + //
-                        "            4. Tags must be selected ONLY from this predefined set:\n" + //
-                        "            [\"portrait\", \"landscape\", \"nature\", \"architecture\", \"family\", \"friends\", \"travel\", \"celebration\", \"food\", \"pets\", \"sports\", \"art\", \"night\", \"day\", \"urban\", \"beach\", \"mountains\", \"historic\", \"candid\", \"selfie\"]\n" + //
-                        "            5. All tags must be lowercase.\n" + //
-                        "            6. If no relevant tags apply, return an empty list: [].\n" + //
-                        "            7. Always include the \"tags\" attribute.\n" + //
-                        "            8. Never include any extra attributes other than \"tags\".\n" + //
-                        "            9. Do NOT add confidence scores, probabilities, or any other metadata.\n" + //
-                        "            10. Ensure the output is valid JSON (curly braces, brackets, commas, double quotes).\n" + //
-                        " \n" + //
-                        "            ### Example Output:\n" + //
-                        "            {\n" + //
-                        "            \"tags\": [\"travel\", \"beach\", \"friends\"]\n" + //
-                        "            }\n" + //
-                        " \n" + //
-                        "            Analyze the image and return ONLY the JSON object following these rules.";
+        String prompt = "\r\n" + //
+                        "Eres un asistente de análisis de imágenes. Tu tarea es analizar una imagen codificada en base64 y devolver SOLO un objeto JSON válido" + //
+                        "            ### Reglas:" + //
+                        "            1. Salida SOLO del objeto JSON, sin explicaciones y sin comentarios." + //
+                        "            2. Utiliza comillas dobles para todas las claves y valores." + //
+                        "            3. La lista de \"tags\" debe contener entre 1 y 10 elementos." + //
+                        "            4. Las etiquetas deben seleccionarse SÓLO de este conjunto predefinido:" + //
+                        "            [\"retrato\", \"paisaje\", \"naturaleza\", \"arquitectura\", \"familia\", \"amigos\", \"viajes\", \"celebración\", \"comida\", \"mascotas\", \"deportes\", \"arte\", \"noche\", \"dia\", \"urbano\", \"playa\", \"montañas\", \"histórico\", \"selfi\"]" + //
+                        "            5. Todas las etiquetas deben estar en minúsculas." + //
+                        "            6. Si no se aplican etiquetas relevantes, devuelve una lista vacía: []." + //
+                        "            7. Incluye siempre el atributo \"tags\"." + //
+                        "            8. Devuelve siempre el JSON formateado para que cada atributo se lea en una línea distinta." + //
+                        "            Analiza la imagen y devuelve SÓLO el objeto JSON siguiendo estas reglas.";
 
         // Crear ImageUrl
         ImageUrl imageUrl = new ImageUrl();
